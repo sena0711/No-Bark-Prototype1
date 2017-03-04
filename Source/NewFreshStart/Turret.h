@@ -9,18 +9,15 @@ UCLASS()
 class NEWFRESHSTART_API ATurret : public APawn
 {
 	GENERATED_BODY()
-
-
-
 public:
 	// Sets default values for this pawn's properties
 	ATurret();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
+
 	// Called every frame
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
@@ -43,6 +40,7 @@ protected:
 	void YawCamera(float AxisValue);
 	void ZoomIn();
 	void ZoomOut();
-	
-	
+
+
+
 };
