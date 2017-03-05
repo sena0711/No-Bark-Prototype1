@@ -22,25 +22,53 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
-protected:
-	UPROPERTY(EditAnywhere)
-	USpringArmComponent* OurCameraSpringArm;
-	UCameraComponent* OurCamera;
+	UParticleSystemComponent* OurParticleSystem;
+	class UTurretMovementComponent* OurMovementComponent;
 
-	//Input variables
-	FVector2D MovementInput;
-	FVector2D CameraInput;
+	virtual UPawnMovementComponent* GetMovementComponent() const override;
+
+	UPROPERTY(EditAnywhere)
+		USpringArmComponent* SpringArm;
+
+	UPROPERTY(EditAnywhere)
+		UCameraComponent* Camera;
+
+	UPROPERTY(EditAnywhere)
+		UStaticMeshComponent* TurretMeshVisual;
+
+	/** Location on gun muzzle where projectiles should spawn. */
+	UPROPERTY(EditAnywhere, Category = Mesh)
+		class USceneComponent* MuzzleLocation;
+
+	/** Projectile class to spawn */
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		TSubclassOf<class AProjectile> ProjectileClass;
+
+	/** Sound to play each time we fire */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		class USoundBase* FireSound;
+
+	///** AnimMontage to play each time we fire */
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	//	class UAnimMontage* FireAnimation;
+
+
 	float ZoomFactor;
 	bool bZoomingIn;
 
-	//Input functions
+
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
-	void PitchCamera(float AxisValue);
-	void YawCamera(float AxisValue);
+	void Turn(float AxisValue);
+	void LookUp(float AxisValue);
+	void ParticleToggle();
+
 	void ZoomIn();
 	void ZoomOut();
 
 
+	/* Called when the Fire Key is pressed */
+	UFUNCTION()
+		void OnFire();
 
 };

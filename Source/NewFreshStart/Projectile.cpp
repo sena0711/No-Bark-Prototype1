@@ -7,26 +7,42 @@
 // Sets default values
 AProjectile::AProjectile()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 	// Set the sphere's collision radius.
-	CollisionComponent->InitSphereRadius(15.0f);
+	CollisionComponent->InitSphereRadius(5.0f);
 	CollisionComponent->SetSimulatePhysics(true);
 	CollisionComponent->BodyInstance.SetCollisionProfileName("Projectile");
 	//CollisionComponent->OnComponentHit.AddDynamic(this, &AMyProject2Projectile::OnHit);		// set up a notification for when this component hits something blocking
+
+	// Players can't walk on it
+	CollisionComponent->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
+	CollisionComponent->CanCharacterStepUpOn = ECB_No;
 
 
 	// Set the root component to be the collision component.
 	RootComponent = CollisionComponent;
 
-	
+
+	// Create and position a mesh component so we can see where our sphere is
+	SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
+	SphereVisual->SetupAttachment(RootComponent);
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereVisualAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
+	if (SphereVisualAsset.Succeeded())
+	{
+		SphereVisual->SetStaticMesh(SphereVisualAsset.Object);
+		//SphereVisual->SetRelativeLocation(FVector(0.0f, 0.0f, -40.0f));
+		SphereVisual->SetWorldScale3D(FVector(0.1f));
+	}
+
+
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
 	ProjectileMovementComponent->SetUpdatedComponent(CollisionComponent);
-	ProjectileMovementComponent->InitialSpeed = 3000.f;
-	ProjectileMovementComponent->MaxSpeed = 3000.f;
+	ProjectileMovementComponent->InitialSpeed = 5000.f;
+	ProjectileMovementComponent->MaxSpeed = 5000;
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
 	ProjectileMovementComponent->bShouldBounce = true;
 	ProjectileMovementComponent->Bounciness = 0.3f;
@@ -36,23 +52,9 @@ AProjectile::AProjectile()
 	InitialLifeSpan = 3.0f;
 }
 
-// Called when the game starts or when spawned
-//void AProjectile::BeginPlay()
-//{
-//	Super::BeginPlay();
-//	
-//}
-//
-//// Called every frame
-//void AProjectile::Tick( float DeltaTime )
-//{
-//	Super::Tick( DeltaTime );
-//
-//}
-
 void AProjectile::FireInDirection(const FVector & ShootDirection)
 {
-	ProjectileMovementComponent->Velocity = ShootDirection * ProjectileMovementComponent->InitialSpeed;
+	//ProjectileMovementComponent->Velocity = ShootDirection * ProjectileMovementComponent->InitialSpeed;
 
 }
 
