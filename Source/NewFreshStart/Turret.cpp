@@ -12,6 +12,7 @@
 
 ATurret::ATurret()
 {
+	
 	// Our root component will be a sphere that reacts to physics
 	USphereComponent* SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent"));
 	RootComponent = SphereComponent;
@@ -54,7 +55,7 @@ ATurret::ATurret()
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 
 	// Take control of the default player
-	AutoPossessPlayer = EAutoReceiveInput::Player0;
+	//AutoPossessPlayer = EAutoReceiveInput::Player0;
 
 	// Create an instance of our movement component, and tell it to update our root component.
 	OurMovementComponent = CreateDefaultSubobject<UTurretMovementComponent>(TEXT("CustomMovementComponent"));
@@ -70,6 +71,7 @@ ATurret::ATurret()
 	ProjectileClass->IsChildOf(AProjectile::StaticClass());
 
 	ProjectileClass = AProjectile::StaticClass();
+	StartingRotation = GetActorRotation();
 }
 
 // Called when the game starts or when spawned
@@ -150,7 +152,7 @@ void ATurret::MoveRight(float AxisValue)
 void ATurret::Turn(float AxisValue)
 {
 	FRotator NewRotation = GetActorRotation();
-	NewRotation.Yaw = FMath::Clamp(NewRotation.Yaw + AxisValue, -30.0f, 30.0f);
+	NewRotation.Yaw = NewRotation.Yaw + AxisValue;//FMath::Clamp(NewRotation.Yaw + AxisValue, -30.0f, 30.0f);
 
 	SetActorRotation(NewRotation);
 }

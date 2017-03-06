@@ -52,7 +52,7 @@ public:
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	//	class UAnimMontage* FireAnimation;
 
-
+	FRotator StartingRotation;
 	float ZoomFactor;
 	bool bZoomingIn;
 
