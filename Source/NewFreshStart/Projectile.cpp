@@ -10,9 +10,9 @@ AProjectile::AProjectile()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
+	CollisionComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CollsionComponent"));
 	// Set the sphere's collision radius.
-	CollisionComponent->InitSphereRadius(5.0f);
+	
 	CollisionComponent->SetSimulatePhysics(true);
 	CollisionComponent->BodyInstance.SetCollisionProfileName("Projectile");
 	//CollisionComponent->OnComponentHit.AddDynamic(this, &AMyProject2Projectile::OnHit);		// set up a notification for when this component hits something blocking
