@@ -71,7 +71,7 @@ ATurret::ATurret()
 	ProjectileClass->IsChildOf(AProjectile::StaticClass());
 
 	ProjectileClass = AProjectile::StaticClass();
-	StartingRotation = GetActorRotation();
+	
 }
 
 // Called when the game starts or when spawned
@@ -152,7 +152,14 @@ void ATurret::MoveRight(float AxisValue)
 void ATurret::Turn(float AxisValue)
 {
 	FRotator NewRotation = GetActorRotation();
-	NewRotation.Yaw = NewRotation.Yaw + AxisValue;//FMath::Clamp(NewRotation.Yaw + AxisValue, -30.0f, 30.0f);
+	if (limitYawEndingRotation != NULL)
+	{
+		NewRotation.Yaw = FMath::Clamp(NewRotation.Yaw + AxisValue, limitYawStartingRotation, limitYawEndingRotation);
+	}
+	else
+	{
+		NewRotation.Yaw = NewRotation.Yaw + AxisValue;//FMath::Clamp(NewRotation.Yaw + AxisValue, -30.0f, 30.0f);
+	}
 
 	SetActorRotation(NewRotation);
 }

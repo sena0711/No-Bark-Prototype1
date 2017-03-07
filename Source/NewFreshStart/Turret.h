@@ -51,8 +51,10 @@ public:
 	///** AnimMontage to play each time we fire */
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	//	class UAnimMontage* FireAnimation;
-
-	FRotator StartingRotation;
+	UPROPERTY(EditAnywhere)
+	float limitYawStartingRotation;
+	UPROPERTY(EditAnywhere)
+	float limitYawEndingRotation;
 	float ZoomFactor;
 	bool bZoomingIn;
 
