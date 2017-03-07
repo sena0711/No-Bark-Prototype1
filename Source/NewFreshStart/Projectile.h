@@ -19,6 +19,9 @@ class NEWFRESHSTART_API AProjectile : public AActor
 
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* SphereVisual;
+	//** AnimMontage to play each time we fire */
+	UPROPERTY(EditAnywhere)
+		UParticleSystemComponent* OurParticleSystem;
 
 public:
 	// Sets default values for this actor's properties

@@ -34,7 +34,7 @@ AProjectile::AProjectile()
 	{
 		SphereVisual->SetStaticMesh(SphereVisualAsset.Object);
 		//SphereVisual->SetRelativeLocation(FVector(0.0f, 0.0f, -40.0f));
-		SphereVisual->SetWorldScale3D(FVector(0.1f));
+		SphereVisual->SetWorldScale3D(FVector(0.2f));
 	}
 
 
@@ -67,5 +67,12 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPri
 
 		Destroy();
 	}
+
+	if (OurParticleSystem != NULL)
+	{
+		OurParticleSystem->ToggleActive();
+	}
+	Destroy();
+
 }
 
