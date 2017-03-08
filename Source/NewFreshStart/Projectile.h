@@ -11,14 +11,14 @@ class NEWFRESHSTART_API AProjectile : public AActor
 	GENERATED_BODY()
 
 		// Sphere collision component.
-		UPROPERTY(EditAnywhere, Category = Projectile)
-		class USphereCollision* CollisionComponent;
+	UPROPERTY(EditAnywhere, Category = Projectile)
+		class USphereComponent* CollisionComponent;
 	/** Projectile movement component */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 		class UProjectileMovementComponent* ProjectileMovementComponent;
 
 	UPROPERTY(EditAnywhere)
-		USphereCollision* SphereVisual;
+		USphereComponent* SphereVisual;
 	//** AnimMontage to play each time we fire */
 	UPROPERTY(EditAnywhere)
 		UParticleSystemComponent* OurParticleSystem;
@@ -33,9 +33,9 @@ public:
 		void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	/** Returns CollisionComp subobject **/
-	FORCEINLINE class USphereCollision* GetCollisionComp() const { return CollisionComponent; }
-	/** Returns ProjectileMovement subobject **/
-	FORCEINLINE class UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovementComponent; }
+	//FORCEINLINE class USphereCollision* GetCollisionComp() const { return CollisionComponent; }
+	///** Returns ProjectileMovement subobject **/
+	//FORCEINLINE class UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovementComponent; }
 
 
 };

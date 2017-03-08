@@ -10,7 +10,7 @@ AProjectile::AProjectile()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	CollisionComponent = CreateDefaultSubobject<USphereCollision>(TEXT("CollsionComponent"));
+	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("CollsionComponent"));
 	// Set the sphere's collision radius.
 	
 	CollisionComponent->SetSimulatePhysics(true);
@@ -28,12 +28,12 @@ AProjectile::AProjectile()
 
 
 	// Create and position a mesh component so we can see where our sphere is
-	SphereVisual = CreateDefaultSubobject<USphereCollision>(TEXT("VisualRepresentation"));
+	SphereVisual = CreateDefaultSubobject<USphereComponent>(TEXT("VisualRepresentation"));
 	SphereVisual->SetupAttachment(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereVisualAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
 	if (SphereVisualAsset.Succeeded())
 	{
-		SphereVisual->SetStaticMesh(SphereVisualAsset.Object);
+		//->SetStaticMesh(SphereVisualAsset.Object);
 		//SphereVisual->SetRelativeLocation(FVector(0.0f, 0.0f, -40.0f));
 		SphereVisual->SetWorldScale3D(FVector(0.2f));
 	}
