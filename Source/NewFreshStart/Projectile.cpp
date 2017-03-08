@@ -10,12 +10,13 @@ AProjectile::AProjectile()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	CollisionComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CollsionComponent"));
+	CollisionComponent = CreateDefaultSubobject<USphereCollision>(TEXT("CollsionComponent"));
 	// Set the sphere's collision radius.
 	
 	CollisionComponent->SetSimulatePhysics(true);
 	CollisionComponent->BodyInstance.SetCollisionProfileName("Projectile");
-	//CollisionComponent->OnComponentHit.AddDynamic(this, &AMyProject2Projectile::OnHit);		// set up a notification for when this component hits something blocking
+	
+	//CollisionComponent->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);		// set up a notification for when this component hits something blocking
 
 	// Players can't walk on it
 	CollisionComponent->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
@@ -27,7 +28,7 @@ AProjectile::AProjectile()
 
 
 	// Create and position a mesh component so we can see where our sphere is
-	SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
+	SphereVisual = CreateDefaultSubobject<USphereCollision>(TEXT("VisualRepresentation"));
 	SphereVisual->SetupAttachment(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereVisualAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
 	if (SphereVisualAsset.Succeeded())
@@ -72,6 +73,7 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPri
 	{
 		OurParticleSystem->ToggleActive();
 	}
+
 	Destroy();
 
 }
