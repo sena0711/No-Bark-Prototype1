@@ -22,6 +22,8 @@ class NEWFRESHSTART_API AProjectile : public AActor
 	//** AnimMontage to play each time we fire */
 	UPROPERTY(EditAnywhere)
 		UParticleSystemComponent* OurParticleSystem;
+	UPROPERTY(EditAnywhere)
+		float Thresehold;
 
 public:
 	// Sets default values for this actor's properties
