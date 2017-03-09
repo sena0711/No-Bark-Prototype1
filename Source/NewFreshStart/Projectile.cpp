@@ -45,7 +45,7 @@ AProjectile::AProjectile()
 	ProjectileMovementComponent->InitialSpeed = 5000.f;
 	ProjectileMovementComponent->MaxSpeed = 5000;
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
-	ProjectileMovementComponent->bShouldBounce = true;
+	ProjectileMovementComponent->bShouldBounce = false;
 	ProjectileMovementComponent->Bounciness = 0.3f;
 
 
@@ -64,7 +64,7 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPri
 	// Only add impulse and destroy projectile if we hit a physics
 	if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL) && OtherComp->IsSimulatingPhysics())
 	{
-		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
+		OtherComp->AddImpulseAtLocation(GetVelocity() * Thresehold, GetActorLocation());
 
 		Destroy();
 	}
